@@ -342,9 +342,13 @@ int main(int argc, char* argv[])
 
 	auto config = readConfig(std::filesystem::path(config_file_path));
 	std::cout << "[LOG] Step 1: Successfully read configuration from: " << config_file_path <<std::endl;
-	ufo::Map<ufo::MapType::SEEN_FREE | ufo::MapType::REFLECTION | ufo::MapType::LABEL> map(
+	ufo::Map<ufo::MapType::SEEN_FREE | ufo::MapType::REFLECTION | ufo::MapType::LABEL | ufo::MapType::OCCUPANCY> map(
 	    config.map.resolution, config.map.levels);
 	map.reserve(100'000'000);
+
+	printf("o: %f, f: %f\n", map.occupiedThres(), map.freeThres());
+	map.setOccupancyThres(0.5, 0.15);
+	printf("o: %f, f: %f\n", map.occupiedThres(), map.freeThres());
 
 	std::vector<std::filesystem::path> pcds;
 	for (const auto& entry : std::filesystem::directory_iterator(path / "pcd")) {
@@ -419,6 +423,7 @@ int main(int argc, char* argv[])
 	ufo::PointCloudColor cloud_static;
 
 	for (auto& p : cloud_acc) {
+		// if (map.isOccupied(p)) || (!map.seenFree(p) && !map.isFree(p))
 		if (!map.seenFree(p))
 			cloud_static.push_back(p);
 	}

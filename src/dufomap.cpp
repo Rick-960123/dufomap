@@ -423,8 +423,7 @@ int main(int argc, char* argv[])
 	ufo::PointCloudColor cloud_static;
 
 	for (auto& p : cloud_acc) {
-		// if (map.isOccupied(p)) || (!map.seenFree(p) && !map.isFree(p))
-		if (!map.seenFree(p))
+		if ((map.isOccupied(p)) || (!map.seenFree(p) && !map.isFree(p)))
 			cloud_static.push_back(p);
 	}
 

@@ -1,7 +1,7 @@
 
 [important]
 resolution = 0.1            # voxel size (meters), v in the paper, default 0.1
-inflate_unknown = 1         # d_p in the paper, default 1
+inflate_unknown = 2         # d_p in the paper, default 1
 inflate_hits_dist = 0.2     # d_s in the paper, default 0.2
 
 
@@ -36,4 +36,4 @@ debug = false
 
 [output]
 filename = "dufomap_output"
-raycasting = false
+raycasting = true
